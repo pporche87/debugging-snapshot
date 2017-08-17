@@ -16,7 +16,7 @@ const createContact = (contact) =>
     .catch(error => error)
 
 const getContacts = function(){
-  db.query(`
+  return db.query(`
     SELECT
       *
     FROM
@@ -26,7 +26,7 @@ const getContacts = function(){
 
 const getContact = (contactId) =>
   db.one(`
-    SELECT id FROM contacts WHERE id=$1::int LIMIT 1
+    SELECT * FROM contacts WHERE id=$1::int LIMIT 1
     `,
     [contactId])
     .catch(error => error);
@@ -38,7 +38,8 @@ const deleteContact = (contactId) =>
       contacts
     WHERE
       id=$1::int
-    `)
+    `,
+		[contactId])
     .catch(error => error)
 
 const searchForContact = function(searchQuery){
